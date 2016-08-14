@@ -52,7 +52,10 @@ const maybeNotifyErrors = () => notify.onError({
   message: '<%= error.message %>',
 });
 
-const isProduction = () => gutil.env.type === 'production';
+const isProduction = () => gutil.env.type === 'prod';
+const nodeEnv = gutil.env.type || process.env.NODE_ENV || 'dev';
+
+gutil.log(`Building in ${nodeEnv} mode`);
 
 const buildWithBrowserify = (entry) => {
   return browserify({
