@@ -1,11 +1,11 @@
 import each from 'promise-each';
 import timestampOnElement from './util/timestamp';
-import { send as sendMessage, on as onMessage } from './util/messaging';
 import * as Thumbnails from './util/thumbnails';
 import * as Templates from './util/templates';
 import * as Usernames from './util/usernames';
 import * as Emojis from './util/emojis';
 import * as Log from './util/logger.js';
+import * as BHelper from './util/browserHelper.js';
 
 import { $, TIMESTAMP_INTERVAL, on, sendEvent } from './util/util';
 
@@ -21,11 +21,11 @@ const COLUMNS_MEDIA_SIZES = new Map();
  * Injecting inject.js in head before doing anything else
  */
 const scriptEl = document.createElement('script');
-scriptEl.src = chrome.extension.getURL('js/inject.js');
+scriptEl.src = BHelper.getURL('js/inject.js');
 document.head.appendChild(scriptEl);
 
-sendMessage({ action: 'get_settings' }, (response) => {
-  settings = response.settings;
+BHelper.settings.getAll().then(newSettings => {
+  settings = newSettings;
 });
 
 
@@ -430,7 +430,7 @@ on('BTDC_ready', () => {
   setInterval(refreshTimestamps, TIMESTAMP_INTERVAL);
   Emojis.buildEmojiPicker();
 
-  const settingsURL = chrome.extension.getURL('options/options.html');
+  const settingsURL = BHelper.getURL('options/options.html');
   const settingsBtn = `
   <a class="btd-settings-btn js-header-action link-clean cf app-nav-link padding-hl" data-title="Better TweetDeck Settings"> <div class="obj-left"> <i class="icon icon-sliders icon-large"></i> </div> <div class="nbfc padding-ts hide-condensed">Better TweetDeck Settings</div> </a>
   `;
@@ -440,7 +440,7 @@ on('BTDC_ready', () => {
     window.open(settingsURL);
   });
 
-  onMessage((details) => {
+  BHelper.messages.on((details) => {
     document.dispatchEvent(new CustomEvent('uiComposeTweet'));
     $('textarea.js-compose-text')[0].value = `${details.text} ${details.url}`;
     $('textarea.js-compose-text')[0].dispatchEvent(new Event('change'));

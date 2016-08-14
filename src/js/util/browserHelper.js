@@ -17,13 +17,17 @@ const getKey = (object, property) => {
   return getKey(value, elems.slice(1));
 };
 
-const settingsKey = 'BTDSettings';
-const storage = chrome.storage.sync || chrome.storage.local;
+const isEdge = typeof chrome === 'undefined';
+const browserObject = isEdge ? window.browser : chrome;
 
-export const getVersion = () => chrome.app.getDetails().version;
+
+const settingsKey = 'BTDSettings';
+const storage = browserObject.storage.sync || browserObject.storage.local;
+
+export const getVersion = () => browserObject.app.getDetails().version;
 export const getUA = () => window.navigator.userAgent;
 export const getMessage = (msg) => {
-  const string = chrome.i18n.getMessage(msg);
+  const string = browserObject.i18n.getMessage(msg);
 
   if (string === '') {
     throw new Error(`No Message found for ${msg} in locales`);
@@ -32,39 +36,53 @@ export const getMessage = (msg) => {
   return string;
 };
 
-export const settings = {
-  get(property, cb) {
-    return this.getAll((settingsVal) => {
-      cb(getKey(settingsVal, property));
-    });
-  },
-  set(obj, cb) {
-    this.getAll((currSettings) => {
-      storage.set({
-        [settingsKey]: Object.assign(currSettings, obj),
-      }, () => {
-        if (cb) {
-          return cb();
-        }
+export const getLocaleFor = (key) => browserObject.i18n.getMessage(key);
+export const getURL = url => browserObject.extension.getURL(url);
 
-        return false;
+export const settings = {
+  get(property) {
+    return new Promise(resolve => {
+      this.getAll().then((settingsVal) => {
+        resolve(getKey(settingsVal, property));
       });
     });
   },
-  getAll(done) {
-    storage.get(settingsKey, (obj) => {
-      done(obj[settingsKey]);
+  set(obj) {
+    return new Promise(resolve => {
+      this.getAll((currSettings) => {
+        storage.set({
+          [settingsKey]: Object.assign(currSettings, obj),
+        }, resolve);
+      });
     });
   },
-  setAll(newSettings, done, getBack = false) {
-    storage.set({
-      [settingsKey]: newSettings,
-    }, () => {
-      if (getBack) {
-        return this.getAll(done);
-      }
-
-      return done();
+  getAll() {
+    return new Promise(resolve => {
+      storage.get(settingsKey, (obj) => {
+        resolve(obj[settingsKey]);
+      });
     });
+  },
+  setAll(newSettings, getBack = false) {
+    return new Promise(resolve => {
+      storage.set({
+        [settingsKey]: newSettings,
+      }, () => {
+        if (getBack) {
+          return this.getAll().then(resolve);
+        }
+
+        return resolve();
+      });
+    });
+  },
+};
+
+export const messages = {
+  send(message, cb) {
+    return browserObject.runtime.sendMessage(message, cb);
+  },
+  on(cb) {
+    return browserObject.runtime.onMessage.addListener(cb);
   },
 };

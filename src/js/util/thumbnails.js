@@ -3,10 +3,10 @@ import qs from 'query-string';
 import reusePromise from 'reuse-promise';
 import domify from 'domify';
 
-import { send as sendMessage } from './messaging';
 import * as Log from './logger';
 import { parseURL } from './parseUrl.js';
 import { fetch as fetchPage } from './fetchPage.js';
+import { settings } from './browserHelper';
 
 const endpoints = {
   embedly: 'https://api.embed.ly/1/oembed?',
@@ -23,8 +23,8 @@ const endpoints = {
 
 let providersSettings;
 
-sendMessage({ action: 'get', key: 'thumbnails' }, (response) => {
-  providersSettings = response.val;
+settings.get('thumbnails').then(val => {
+  providersSettings = val;
 });
 
 const getSafeURL = (url) => {

@@ -1,20 +1,20 @@
 import fecha from 'fecha';
-import { send as sendMessage } from './messaging';
+import { settings } from './browserHelper';
 
 let timestampMode;
 let customMode;
 let fullAfter24;
 
-sendMessage({ action: 'get', key: 'ts' }, (response) => {
-  timestampMode = response.val;
+settings.get('ts').then(response => {
+  timestampMode = response;
 });
 
-sendMessage({ action: 'get', key: 'full_aft_24' }, (response) => {
-  fullAfter24 = response.val;
+settings.get('full_aft_24').then(response => {
+  fullAfter24 = response;
 });
 
-sendMessage({ action: 'get', key: 'custom_ts' }, (response) => {
-  customMode = response.val;
+settings.get('custom_ts').then(response => {
+  customMode = response;
 });
 
 const formatMaps = {

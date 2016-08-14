@@ -117,7 +117,7 @@ function refreshPreviews(settings) {
 /**
  * When got the settings we initialise the view
  */
-BHelper.settings.getAll(settings => {
+BHelper.settings.getAll().then(settings => {
   const settingsStr = JSON.stringify(settings, null, 2);
 
   $('.settings-dump').html(Prism.highlight(settingsStr, Prism.languages.js));
@@ -194,7 +194,7 @@ BHelper.settings.getAll(settings => {
    */
 
   $('input[name]').on('change input', (e) => {
-    $('.save-button').text(chrome.i18n.getMessage('save_save')).removeAttr('disabled');
+    $('.save-button').text(BHelper.getLocaleFor('save_save')).removeAttr('disabled');
 
     if (e.target.type === 'radio' && e.target.name === 'ts') {
       if (e.target.hasAttribute('data-ghost')) {
@@ -274,7 +274,7 @@ BHelper.settings.getAll(settings => {
 
 
     BHelper.settings.set(newSettings);
-    $('.save-button').text(chrome.i18n.getMessage('save_no')).attr('disabled', '');
+    $('.save-button').text(BHelper.getLocaleFor('save_no')).attr('disabled', '');
   });
 });
 
@@ -328,8 +328,8 @@ fetch('https://api.github.com/repos/eramdam/BetterTweetDeck/contributors').then(
   });
 });
 
-fetch(chrome.extension.getURL('options/NEWS.md')).then(res => res.text()).then(body => {
-  $('.settings-section.changelog')[0].innerHTML = Emoji.replace_colons(marked(body)).split('/emoji-data/sheet_twitter_64.png').join(chrome.extension.getURL('emojis/sheet_twitter_64.png'));
+fetch(BHelper.getURL('options/NEWS.md')).then(res => res.text()).then(body => {
+  $('.settings-section.changelog')[0].innerHTML = Emoji.replace_colons(marked(body)).split('/emoji-data/sheet_twitter_64.png').join(BHelper.getURL('emojis/sheet_twitter_64.png'));
 });
 
 // Because nobody got time to write that HTML by hand, right?

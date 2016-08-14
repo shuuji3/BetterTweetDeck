@@ -1,5 +1,4 @@
 import * as BHelper from './util/browserHelper';
-import * as Messages from './util/messaging';
 import * as Log from './util/logger';
 import { defaultsDeep } from 'lodash';
 
@@ -55,7 +54,7 @@ function contextMenuHandler(info, tab, settings) {
   /**
    * We query a tab with TweetDeck opened in it
    */
-  chrome.tabs.query({
+  BHelper.browserObject.tabs.query({
     url: '*://tweetdeck.twitter.com/*',
   }, (tabs) => {
     if (tabs.length === 0) {
@@ -67,15 +66,15 @@ function contextMenuHandler(info, tab, settings) {
     /**
      * We take the first tab we find, focus/select it and send a message to it
      */
-    chrome.windows.update(TDTab.windowId, {
+    BHelper.browserObject.windows.update(TDTab.windowId, {
       focused: true,
     }, () => {
-      chrome.tabs.update(TDTab.id, {
+      BHelper.browserObject.tabs.update(TDTab.id, {
         selected: true,
         active: true,
         highlighted: true,
       }, () => {
-        chrome.tabs.sendMessage(TDTab.id, {
+        BHelper.browserObject.tabs.sendMessage(TDTab.id, {
           text: textToShare,
           url: urlToShare,
         });
@@ -90,7 +89,7 @@ const oldTStoNew = {
   relative: 'relative',
 };
 
-BHelper.settings.getAll(settings => {
+BHelper.settings.getAll().then(settings => {
   let curSettings;
 
   // Migrating old settings. Settings that don't exist will default automatically
@@ -122,12 +121,12 @@ BHelper.settings.getAll(settings => {
     curSettings = settings;
   }
 
-  BHelper.settings.setAll(defaultsDeep(curSettings, defaultSettings), (newSettings) => {
+  BHelper.settings.setAll(defaultsDeep(curSettings, defaultSettings), true).then((newSettings) => {
     Log.debug(newSettings);
     // If the user is new on v3 then we display the "on install" page
     // '1470620185697' => ~7th of August
     if (!newSettings.installed_date || newSettings.installed_date <= 1470620185697) {
-      chrome.tabs.create({
+      BHelper.browserObject.tabs.create({
         url: 'options/options.html?on=install',
       });
 
@@ -136,27 +135,11 @@ BHelper.settings.getAll(settings => {
 
     // We create the context menu item
     if (newSettings.share_item && newSettings.share_item.enabled) {
-      chrome.contextMenus.create({
+      BHelper.browserObject.contextMenus.create({
         title: BHelper.getMessage('shareOnTD'),
         contexts: ['page', 'selection', 'image', 'link'],
         onclick: (info, tab) => contextMenuHandler(info, tab, newSettings),
       });
     }
-  }, true);
-});
-
-// Simple interface to get settings
-Messages.on((message, sender, sendResponse) => {
-  switch (message.action) {
-    case 'get_settings':
-      BHelper.settings.getAll((settings) => sendResponse({ settings }));
-      return true;
-
-    case 'get':
-      BHelper.settings.get(message.key, (val) => sendResponse({ val }));
-      return true;
-
-    default:
-      return false;
-  }
+  });
 });

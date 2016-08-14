@@ -1,10 +1,10 @@
-import { send as sendMessage } from './messaging';
+import { settings } from './browserHelper';
 import { $ } from './util';
 
 let nameFormat;
 
-sendMessage({ action: 'get', key: 'nm_disp' }, (response) => {
-  nameFormat = response.val;
+settings.get('nm_disp', (response) => {
+  nameFormat = response;
 });
 
 function removeElMatchingSel(sel, node) {
