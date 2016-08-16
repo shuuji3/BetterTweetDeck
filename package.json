@@ -1,4 +1,5 @@
 {
+  "title": "Better TweetDeck",
   "name": "BetterTweetDeck",
   "version": "3.0.12",
   "description": "Adds some nice options on TweetDeck to provide a better experience on the webapp when used on Chrome.",
@@ -6,16 +7,16 @@
     "type": "git",
     "url": "https://github.com/eramdam/BetterTweetDeck.git"
   },
-  "author": "",
+  "author": "Damien Erambert",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/eramdam/BetterTweetDeck/issues"
   },
   "scripts": {
-    "start": "gulp",
-    "build": "gulp build",
-    "build:prod": "rm -rf dist/ && gulp build --type prod && zip -qr -9 -X dist.zip dist/",
-    "bs-options": "browser-sync start --server 'dist/options/' --files 'dist/options/**/*'"
+    "prestart": "rimraf dist",
+    "start": "cross-env NODE_ENV=dev gulp",
+    "prebuild": "rimraf dist",
+    "build": "cross-env NODE_ENV=prod gulp build"
   },
   "homepage": "https://github.com/eramdam/BetterTweetDeck",
   "devDependencies": {
@@ -27,6 +28,7 @@
     "browserify": ">=11.0.1",
     "config": "^1.17.1",
     "config-browserify": "^1.0.5",
+    "cross-env": "^2.0.0",
     "cssnano": "^3.5.2",
     "del": ">=1.2.1",
     "eslint": "^2.9.0",
