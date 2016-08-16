@@ -1,11 +1,11 @@
 {
 	"name": "__MSG_appName__",
-	"short_name": "BetterTDeck",
+	"short_name": "{{package.name}}",
 	"default_locale": "en",
-	"version": "3.0.12",
+	"version": "{{package.version}}",
 	"manifest_version": 2,
 	"description": "__MSG_appDesc__",
-	"homepage_url": "https://github.com/eramdam/BetterTweetDeck/",
+	"homepage_url": "{{package.homepage}}",
 	"content_scripts": [{
 		"matches": ["*://tweetdeck.twitter.com/*"],
 		"js": ["js/content.js"],
@@ -38,7 +38,7 @@
 		"contextMenus"
 	],
 	"options_ui": {
-		"page": "options/ui/ui.html",
+		"page": "{{{common.options_ui_html}}}",
 		"chrome_style": false
 	},
 	"web_accessible_resources": ["js/inject.js", "js/content.js.map", "js/inject.js.map", "js/background.js.map", "emojis/sheet_twitter_64.png", "emojis/emoji-happy.svg", "icons/controller-play.svg", "options/options.html"],

@@ -15,6 +15,7 @@ import uglify from 'gulp-uglify';
 import sourcemaps from 'gulp-sourcemaps';
 import gutil from 'gulp-util';
 import rename from 'gulp-rename';
+import mustache from 'gulp-mustache';
 
 // CSS
 import postcss from 'gulp-postcss';
@@ -149,8 +150,11 @@ gulp.task('lint', () => (
 
 gulp.task('manifest', () => {
   const browser = gutil.env.browser || 'chrome';
+  const packageJson = JSON.parse(require('fs').readFileSync('./package.json', 'utf8'));
+  const commonJson = JSON.parse(require('fs').readFileSync('./util/manifest.common.json', 'utf8'));
 
   return gulp.src(`./util/manifest.${browser}.json`)
+         .pipe(mustache({ package: packageJson, common: commonJson }))
          .pipe(rename('manifest.json'))
          .pipe(gulp.dest('./dist'))
 });
@@ -162,7 +166,7 @@ gulp.task('manifest', () => {
 *
 */
 gulp.task('build', (done) => {
-  runSequence('clean', ['js', 'static', 'css', 'css-options'], 'static-news', done);
+  runSequence('clean', ['js', 'static', 'css', 'css-options'], 'static-news', 'manifest', done);
 });
 
 /*
@@ -172,11 +176,12 @@ gulp.task('build', (done) => {
 *
 */
 gulp.task('default', (done) => {
-  runSequence('clean', ['css', 'css-options', 'js', 'static'], 'static-news', () => {
+  runSequence('clean', ['css', 'css-options', 'js', 'static'], 'static-news', 'manifest', () => {
     gulp.watch(['./src/js/**/*.js',  './src/options/*.js'], ['js', 'js-options']);
     gulp.watch(['./src/css/**/*.css'], ['css', 'css-options']);
     gulp.watch(staticFiles, ['static', 'static-news']);
     gulp.watch('./NEWS', ['static-news']);
+    gulp.watch('./util/manifest.*.json', ['manifest']);
     done();
   });
 });
