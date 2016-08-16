@@ -56,12 +56,14 @@
     "promise-each": "^2.2.0",
     "query-string": "^4.2.1",
     "reuse-promise": "^1.0.1",
+    "rimraf": "^2.5.4",
     "run-sequence": ">=1.1.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": ">=1.1.0",
     "vinyl-transform": "^1.0.0"
   },
   "dependencies": {
-    "domify": "^1.4.0"
+    "domify": "^1.4.0",
+    "gulp-rename": "^1.2.2"
   }
 }

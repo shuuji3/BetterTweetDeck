@@ -14,6 +14,7 @@ import eslint from 'gulp-eslint';
 import uglify from 'gulp-uglify';
 import sourcemaps from 'gulp-sourcemaps';
 import gutil from 'gulp-util';
+import rename from 'gulp-rename';
 
 // CSS
 import postcss from 'gulp-postcss';
@@ -22,7 +23,6 @@ import cssnano from 'cssnano';
 import nested from 'postcss-nested';
 
 const staticFiles = [
-  'manifest.json',
   'icons/*.png',
   'emojis/sheet_twitter_64.png',
   'options/**/*.html',
@@ -147,6 +147,14 @@ gulp.task('lint', () => (
     .pipe(eslint.format())
     // .pipe(eslint.failAfterError())
 ));
+
+gulp.task('manifest', () => {
+  const browser = gutil.env.browser || 'chrome';
+
+  return gulp.src(`./util/manifest.${browser}.json`)
+         .pipe(rename('manifest.json'))
+         .pipe(gulp.dest('./dist'))
+});
 
 /*
 *
