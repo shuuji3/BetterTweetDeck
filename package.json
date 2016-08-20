@@ -16,7 +16,9 @@
     "prestart": "rimraf dist",
     "start": "cross-env NODE_ENV=dev gulp",
     "prebuild": "rimraf dist",
-    "build": "cross-env NODE_ENV=prod gulp build"
+    "build": "cross-env NODE_ENV=prod gulp build",
+    "build:edge": "cross-env NODE_ENV=prod gulp build --browser edge",
+    "build:chrome": "cross-env NODE_ENV=prod gulp build --browser chrome"
   },
   "homepage": "https://github.com/eramdam/BetterTweetDeck",
   "devDependencies": {

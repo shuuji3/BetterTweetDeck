@@ -148,15 +148,25 @@ gulp.task('lint', () => (
     // .pipe(eslint.failAfterError())
 ));
 
-gulp.task('manifest', () => {
-  const browser = gutil.env.browser || 'chrome';
-  const packageJson = JSON.parse(require('fs').readFileSync('./package.json', 'utf8'));
-  const commonJson = JSON.parse(require('fs').readFileSync('./util/manifest.common.json', 'utf8'));
+function string_src(filename, string) {
+  var src = require('stream').Readable({ objectMode: true })
+  src._read = function () {
+    this.push(new gutil.File({
+      cwd: "",
+      base: "",
+      path: filename,
+      contents: new Buffer(string)
+    }))
+    this.push(null)
+  }
+  return src
+}
 
-  return gulp.src(`./util/manifest.${browser}.json`)
-         .pipe(mustache({ package: packageJson, common: commonJson }))
-         .pipe(rename('manifest.json'))
-         .pipe(gulp.dest('./dist'))
+gulp.task('manifest', (done) => {
+  const browser = gutil.env.browser || 'chrome';
+  const manifestJson = JSON.stringify(require(`./util/manifest.${browser}.js`));
+
+  return string_src('manifest.json', manifestJson).pipe(gulp.dest('./dist/'))
 });
 
 /*
