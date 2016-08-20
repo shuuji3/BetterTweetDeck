@@ -191,7 +191,7 @@ gulp.task('default', (done) => {
     gulp.watch(['./src/css/**/*.css'], ['css', 'css-options']);
     gulp.watch(staticFiles, ['static', 'static-news']);
     gulp.watch('./NEWS', ['static-news']);
-    gulp.watch('./util/manifest.*.json', ['manifest']);
+    gulp.watch('./util/manifest.*', ['manifest']);
     done();
   });
 });
