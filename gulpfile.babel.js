@@ -64,6 +64,7 @@ const buildWithBrowserify = (entry) => {
     entries: entry,
     debug: !isProduction(),
   })
+  .transform('browserify-data')
   .transform('babelify')
   .transform('config-browserify')
   .bundle()

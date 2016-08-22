@@ -1,4 +1,4 @@
-// This module is used by the background page
+const defaultLocale = require('../../_locales/en/messages.json');
 
 // From https://github.com/lorenwest/node-config/blob/master/lib/config.js#L131-L152
 const getKey = (object, property) => {
@@ -17,27 +17,23 @@ const getKey = (object, property) => {
   return getKey(value, elems.slice(1));
 };
 
-const isEdge = typeof chrome === 'undefined';
-const browserObject = isEdge ? window.browser : chrome;
-
 
 const settingsKey = 'BTDSettings';
-const storage = browserObject.storage.sync || browserObject.storage.local;
+const storage = chrome.storage.sync || chrome.storage.local;
 
-export const getVersion = () => browserObject.app.getDetails().version;
+export const getVersion = () => chrome.app.getDetails().version;
 export const getUA = () => window.navigator.userAgent;
 export const getMessage = (msg) => {
-  const string = browserObject.i18n.getMessage(msg);
+  const string = chrome.i18n.getMessage(msg);
 
   if (string === '') {
-    throw new Error(`No Message found for ${msg} in locales`);
+    return defaultLocale[msg].message;
   }
 
   return string;
 };
 
-export const getLocaleFor = (key) => browserObject.i18n.getMessage(key);
-export const getURL = url => browserObject.extension.getURL(url);
+export const getURL = url => chrome.extension.getURL(url);
 
 export const settings = {
   get(property) {
@@ -80,9 +76,9 @@ export const settings = {
 
 export const messages = {
   send(message, cb) {
-    return browserObject.runtime.sendMessage(message, cb);
+    return chrome.runtime.sendMessage(message, cb);
   },
   on(cb) {
-    return browserObject.runtime.onMessage.addListener(cb);
+    return chrome.runtime.onMessage.addListener(cb);
   },
 };

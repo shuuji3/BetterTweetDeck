@@ -194,7 +194,7 @@ BHelper.settings.getAll().then(settings => {
    */
 
   $('input[name]').on('change input', (e) => {
-    $('.save-button').text(BHelper.getLocaleFor('save_save')).removeAttr('disabled');
+    $('.save-button').text(BHelper.getMessage('save_save', 'Save changes')).removeAttr('disabled');
 
     if (e.target.type === 'radio' && e.target.name === 'ts') {
       if (e.target.hasAttribute('data-ghost')) {
@@ -274,7 +274,7 @@ BHelper.settings.getAll().then(settings => {
 
 
     BHelper.settings.set(newSettings);
-    $('.save-button').text(BHelper.getLocaleFor('save_no')).attr('disabled', '');
+    $('.save-button').text(BHelper.getMessage('save_no', 'No changes')).attr('disabled', '');
   });
 });
 
