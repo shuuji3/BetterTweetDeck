@@ -1,6 +1,11 @@
 /* eslint no-underscore-dangle: 0 */
 
 import config from 'config';
+import polyfills from './util/polyfill';
+
+if (typeof Element.prototype.closest !== 'function') {
+  polyfills();
+}
 
 let SETTINGS;
 

@@ -11,6 +11,12 @@ import { $, TIMESTAMP_INTERVAL, on, sendEvent } from './util/util';
 
 let settings;
 
+import polyfills from './util/polyfill';
+
+if (typeof Element.prototype.closest !== 'function') {
+  polyfills();
+}
+
 /**
  * This will contain the sizes of each column
  * Ensuring a much faster way to retrieve/update them than querying the DOM
