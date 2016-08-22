@@ -54,8 +54,10 @@ const maybeNotifyErrors = () => notify.onError({
 });
 
 const isProduction = () => process.env.NODE_ENV === 'prod';
+const browser = gutil.env.browser || 'chrome';
 
 gutil.log(`Building in ${process.env.NODE_ENV} mode`);
+gutil.log(`Building in ${browser} mode`);
 
 const buildWithBrowserify = (entry) => {
   return browserify({
@@ -87,7 +89,16 @@ gulp.task('clean', () => del(['dist/']));
 * Simply copy files like images/json to the build folder
 *
 */
-gulp.task('static', () => gulp.src(staticFiles, { base: './src' }).pipe(gulp.dest('./dist')) );
+gulp.task('static', (done) => {
+  gulp.src(staticFiles, { base: './src' }).pipe(gulp.dest('./dist'))
+
+  if (browser !== 'edge')
+    return done();
+
+  gulp.src(['./util/appxmanifest.xml', './util/contentScriptsAPIBridge.js', './util/backgroundScriptsAPIBridge.js'], { base: './util/'})
+      .pipe(gulp.dest('./dist'));
+  done();
+});
 
 gulp.task('static-news', () => gulp.src('./NEWS.md').pipe(gulp.dest('./dist/options/')) );
 
@@ -163,7 +174,6 @@ function string_src(filename, string) {
 }
 
 gulp.task('manifest', (done) => {
-  const browser = gutil.env.browser || 'chrome';
   const manifestJson = JSON.stringify(require(`./util/manifest.${browser}.js`));
 
   return string_src('manifest.json', manifestJson).pipe(gulp.dest('./dist/'))

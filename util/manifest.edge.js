@@ -16,4 +16,8 @@ module.exports = {
   permissions: common.permissions,
   content_security_policy: common.content_security_policy,
   web_accessible_resources: common.web_accessible_resources,
+  '-ms-preload': {
+    backgroundScript: 'backgroundScriptsAPIBridge.js',
+    contentScript: 'contentScriptsAPIBridge.js',
+  },
 };

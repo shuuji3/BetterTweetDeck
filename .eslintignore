@@ -2,3 +2,5 @@ gulpfile.*
 tools/**/*.js
 tools/**/*.json
 src/emojis/emojis.js
+util/backgroundScriptsAPIBridge.js
+util/contentScriptsAPIBridge.js
