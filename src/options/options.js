@@ -328,7 +328,7 @@ fetch('https://api.github.com/repos/eramdam/BetterTweetDeck/contributors').then(
   });
 });
 
-fetch(BHelper.getURL('options/NEWS.md')).then(res => res.text()).then(body => {
+fetch('https://raw.githubusercontent.com/eramdam/BetterTweetDeck/a80868ced0ab049010ce08d2711540733a93557c/NEWS.md').then(res => res.text()).then(body => {
   $('.settings-section.changelog')[0].innerHTML = Emoji.replace_colons(marked(body)).split('/emoji-data/sheet_twitter_64.png').join(BHelper.getURL('emojis/sheet_twitter_64.png'));
 });
 
