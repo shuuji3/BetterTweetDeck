@@ -15,10 +15,12 @@
   "scripts": {
     "prestart": "rimraf dist",
     "start": "cross-env NODE_ENV=dev gulp",
+    "start:edge": "cross-env NODE_ENV=dev gulp --browser edge",
+    "start:chrome": "cross-env NODE_ENV=dev gulp --browser edge",
     "prebuild": "rimraf dist",
-    "build": "cross-env NODE_ENV=prod gulp build",
-    "build:edge": "cross-env NODE_ENV=prod gulp build --browser edge",
-    "build:chrome": "cross-env NODE_ENV=prod gulp build --browser chrome"
+    "build": "cross-env NODE_ENV=prod gulp build --type production",
+    "build:edge": "cross-env NODE_ENV=prod gulp build --type production --browser edge",
+    "build:chrome": "cross-env NODE_ENV=prod gulp build --type production --browser chrome"
   },
   "homepage": "https://github.com/eramdam/BetterTweetDeck",
   "devDependencies": {
@@ -68,6 +70,7 @@
     "vinyl-transform": "^1.0.0"
   },
   "dependencies": {
+    "browserify-data": "^0.2.0",
     "domify": "^1.4.0",
     "gulp-rename": "^1.2.2"
   }
