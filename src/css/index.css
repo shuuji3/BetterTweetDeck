@@ -17,6 +17,7 @@
 @import './features/round-pic.css';
 @import './features/show-verified.css';
 @import './features/small-icns.css';
+@import './features/slim_scrollbars.css';
 @import './features/username-typeahead.css';
 
 /* Emoji Panel */
@@ -99,8 +100,13 @@
   cursor: zoom-in;
 }
 
-.noembed-embed-inner > div {
+.noembed-embed-inner > div,
+.streamable-embed-container {
   min-width: 750px;
+}
+
+.streamable-embed-container > iframe {
+  left: 0;
 }
 
 .tweet-dogear {
@@ -125,4 +131,8 @@
 
 .is-retweet.is-favorite .tweet-dogear {
   background-position: -200px -10px
+}
+
+div.youtube-player:matches(.-gfycat) {
+  min-width: 700px;
 }

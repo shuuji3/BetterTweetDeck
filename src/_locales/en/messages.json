@@ -28,7 +28,7 @@
   "time_custom": { "message": "Custom (<a target='_blank' href='https://github.com/taylorhakes/fecha#formatting-tokens'>Formatting help</a>)" },
   "time_short": { "message": "Short" },
   "time_full": { "message": "Full" },
-  "time_full24": { "message": "Display full date after 24h" },
+  "time_full24": { "message": "Display full date after 24h <small>Applies only for non-relative timestamps</small>" },
 
   "title_nameDisplay": { "message": "Name display style" },
 
@@ -46,16 +46,18 @@
   "css_actions_on_right": { "message": "Show tweet actions on the right" },
   "css_actions_on_hover": { "message": "Show tweet actions on hover" },
   "css_no_bg_modal": { "message": "Hide background behind fullscreen previews" },
+  "css_slim_scrollbars": { "message": "Thinner scrollbars" },
   "no_hearts": { "message": "Show stars instead of hearts" },
   "rtl_text_style": { "message": "Detect and apply RTL style when needed" },
   "flash_tweets": { "message": "Make tweets flash in:" },
   "flash_tweets_mentions": { "message": "Mentions columns" },
   "flash_tweets_all": { "message": "Every column" },
 
-  "share_btd_item": { "message": "Add the 'Share on Better TweetDeck' action on contextual menu <small>Will be applied at next Chrome restart</small>" },
-  "share_short_txt": { "message": "Shorten the selected text while using the 'Share on Better TweetDeck' action <small>Will be applied at next Chrome restart</small>" },
+  "share_btd_item": { "message": "Add the 'Share on Better TweetDeck' action on contextual menu <small>Will be applied at next restart</small>" },
+  "share_short_txt": { "message": "Shorten the selected text while using the 'Share on Better TweetDeck' action <small>Will be applied at next restart</small>" },
   "no_tco": { "message": "Remove t.co redirection on links" },
   "stop_autoplay_gifs": { "message": "Don't autoplay GIFs in columns" },
+  "no_gif_pp": { "message": "No GIFs in profile pictures in columns" },
   "thumbnails_from": { "message": "Display thumbnails from:" },
 
   "css_minimal_mode": { "message": "Enable the 'Minimal' mode" },
@@ -94,5 +96,8 @@
   "donate_title":  { "message": "Help me to maintain Better TweetDeck!" },
   "donate_p3":  { "message": "Thanks a bunch for using Better TweetDeck and helping it live!" },
   "donate_p2":  { "message": "If you can afford it and feel generous, it would be <strong>wonderful</strong> if you could <a href='https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=XK9SQ6ZDE9UF2&lc=US&item_name=Damien%20Erambert&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted'>donate on Paypal</a> or <a href='https://patreon.com/eramdam'>support me on Patreon</a> (you can have access to alpha/beta testing of future versions!).<br><br>Even the smallest contribution is helping!" },
-  "donate_p1": { "message": "Better TweetDeck is and always will be <strong>free of charge</strong> but developing it takes time and keeping it live costs money!<br> <br>The main cost is my <a href='https://embed.ly/'>Embed.ly</a> subscription that allows Better TweetDeck to easily display thumbnails from various services."}
+  "donate_p1": { "message": "Better TweetDeck is and always will be <strong>free of charge</strong> but developing it takes time and keeping it live costs money!"},
+
+  "notification_title":  { "message": "Better TweetDeck Upgrade" },
+  "notification_upgrade":  { "message": "Better TweetDeck has been upgraded to v{{version}}. Click for more information." }
 }

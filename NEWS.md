@@ -1,8 +1,23 @@
-:tada: 3.0.13 (To be released) :tada:
+:tada: 3.0.15 :tada:
+===============
+- [Feature] Added a setting to "stop" GIFs in profile pictures in columns
+- [Fix] Gfycat embed players were too small, it's now fixed
+- [Fix] Twitch clips should now actually work
+- [Improvement] Username formatting should be more reliable/more performant
+- [Improvement] The "no bg" background of modal now has a black to transparent gradient for improve readability
+
+3.0.14
+===============
+- [Fix] Slimmer scrollbars are bigger and it's now an option
+
+3.0.13
 ===============
 - [Fix] GIFs should not stop anymore when the option "Stop gif autoplay" is unchecked
+- [Fix] Streamable embed players were too small and mis-placed, it's now fixed
 - [Improvement] The option "hide links relative to thumbnails" should work more reliably
-- [Feature] Twitch clips (clips.twitch.tv) are now supported
+- [Improvement] Better French translation (Thanks [LeoColomb](https://github.com/LeoColomb))
+- [Improvement] Verified badge is better positioned (Thanks [LeoColomb](https://github.com/LeoColomb))
+- [Feature] Twitch clips (clips.twitch.tv) are now supported ![](https://static-cdn.jtvnw.net/emoticons/v1/41/1.0)
 
 3.0.12
 ===============

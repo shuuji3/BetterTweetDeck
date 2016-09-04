@@ -17,8 +17,6 @@ const getKey = (object, property) => {
   return getKey(value, elems.slice(1));
 };
 
-
-const settingsKey = 'BTDSettings';
 const storage = chrome.storage.sync || chrome.storage.local;
 
 export const getVersion = () => chrome.app.getDetails().version;
@@ -32,6 +30,7 @@ export const getMessage = (msg) => {
 
   return string;
 };
+export const getUpgradeMessage = () => getMessage('notification_upgrade').replace('{{version}}', getVersion());
 
 export const getURL = url => chrome.extension.getURL(url);
 
@@ -47,22 +46,22 @@ export const settings = {
     return new Promise(resolve => {
       this.getAll((currSettings) => {
         storage.set({
-          [settingsKey]: Object.assign(currSettings, obj),
+          BTDSettings: Object.assign(currSettings, obj),
         }, resolve);
       });
     });
   },
   getAll() {
     return new Promise(resolve => {
-      storage.get(settingsKey, (obj) => {
-        resolve(obj[settingsKey]);
+      storage.get('BTDSettings', (obj) => {
+        resolve(obj.BTDSettings);
       });
     });
   },
   setAll(newSettings, getBack = false) {
     return new Promise(resolve => {
       storage.set({
-        [settingsKey]: newSettings,
+        BTDSettings: newSettings,
       }, () => {
         if (getBack) {
           return this.getAll().then(resolve);
