@@ -3,7 +3,6 @@ import * as Log from './util/logger';
 import { defaultsDeep } from 'lodash';
 
 const defaultSettings = {
-  installed_date: new Date().getTime(),
   installed_version: BHelper.getVersion(),
   ts: 'relative',
   custom_ts: {
@@ -20,7 +19,7 @@ const defaultSettings = {
   },
   rtl_text_style: true,
   stop_gifs: true,
-  no_gif_pp: true,
+  no_gif_pp: false,
   css: {
     round_pic: true,
     bigger_emojis: true,

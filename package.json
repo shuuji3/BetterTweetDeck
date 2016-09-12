@@ -1,7 +1,7 @@
 {
   "title": "Better TweetDeck",
   "name": "BetterTweetDeck",
-  "version": "3.0.15",
+  "version": "3.0.16",
   "description": "Adds some nice options on TweetDeck to provide a better experience on the webapp when used on Chrome.",
   "repository": {
     "type": "git",
@@ -20,21 +20,27 @@
     "prebuild": "rimraf dist",
     "build": "cross-env NODE_ENV=prod gulp build --type production",
     "build:edge": "cross-env NODE_ENV=prod gulp build --type production --browser edge",
-    "build:chrome": "cross-env NODE_ENV=prod gulp build --type production --browser chrome"
+    "build:chrome": "cross-env NODE_ENV=prod gulp build --type production --browser chrome",
+    "pack": "node tools/pack.js",
   },
   "homepage": "https://github.com/eramdam/BetterTweetDeck",
-  "devDependencies": {
+  "dependencies": {
     "babel-core": ">=6.2.1",
     "babel-plugin-transform-es2015-modules-commonjs": ">=6.2.0",
     "babel-preset-es2015": ">=6.1.18",
     "babelify": ">=7.2.0",
     "browser-sync": "^2.12.10",
     "browserify": ">=11.0.1",
+    "browserify-data": "^0.2.0",
+    "chalk": "^1.1.3",
     "config": "^1.17.1",
     "config-browserify": "^1.0.5",
-    "cross-env": "^2.0.0",
+    "cross-env": "^2.0.1",
+    "crx": "^3.0.3",
     "cssnano": "^3.5.2",
     "del": ">=1.2.1",
+    "domify": "^1.4.0",
+    "domify": "^1.4.0",
     "eslint": "^2.9.0",
     "eslint-config-airbnb-base": "^3.0.0",
     "eslint-plugin-import": "^1.7.0",
@@ -45,6 +51,7 @@
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.0.1",
     "gulp-postcss": "^6.1.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.1",
     "gulp-util": "^3.0.7",
@@ -68,10 +75,5 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": ">=1.1.0",
     "vinyl-transform": "^1.0.0"
-  },
-  "dependencies": {
-    "browserify-data": "^0.2.0",
-    "domify": "^1.4.0",
-    "gulp-rename": "^1.2.2"
   }
 }

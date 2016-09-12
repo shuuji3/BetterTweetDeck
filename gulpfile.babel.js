@@ -72,7 +72,7 @@ const buildWithBrowserify = (entry) => {
   .pipe(source(path.basename(entry)))
   .pipe(buffer())
   .pipe(isProduction() ? gutil.noop() : sourcemaps.init({ loadMaps: true }))
-  .pipe(isProduction() ? uglify() : gutil.noop())
+  // .pipe(isProduction() ? uglify() : gutil.noop())
   .pipe(isProduction() ? gutil.noop() : sourcemaps.write('./'));
 }
 
@@ -101,7 +101,7 @@ gulp.task('static', (done) => {
   done();
 });
 
-gulp.task('static-news', () => gulp.src('./NEWS.md').pipe(gulp.dest('./dist/options/')) );
+gulp.task('static-news', () => gulp.src('./CHANGELOG.md').pipe(gulp.dest('./dist/options/')) );
 
 /*
 *
