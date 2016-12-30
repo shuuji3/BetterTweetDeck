@@ -5,7 +5,8 @@ import * as Thumbnails from './util/thumbnails';
 import * as Templates from './util/templates';
 import * as Usernames from './util/usernames';
 import * as Emojis from './util/emojis';
-import * as Log from './util/logger.js';
+import * as Log from './util/logger';
+import * as Muter from './util/muter';
 
 import { $, TIMESTAMP_INTERVAL, on, sendEvent } from './util/util';
 
@@ -210,6 +211,8 @@ function tweetHandler(tweet, columnKey, parent) {
   if (!tweet) {
     return;
   }
+
+  Log.debug(Muter.shouldBeMuted(tweet));
 
   if (!hasParent) {
     if (!$(`.js-column[data-column="${columnKey}"]`)) {
