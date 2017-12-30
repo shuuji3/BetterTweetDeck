@@ -163,6 +163,7 @@ export const schemeWhitelist = [
   Providers.youtube(util),
   Providers.yfrog(util),
   Providers.universal(util),
+  Providers.opengraph(util),
 ];
 
 if (!BHelper.isFirefox) {
