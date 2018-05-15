@@ -153,6 +153,23 @@ export default function () {
         return !(e.user.followersCount < parseInt(t.value, 10));
       },
     },
+    BTD_follower_count_more_than: {
+      display: {
+        global: true,
+      },
+      name: 'Retweeted count more than',
+      descriptor: 'tweets by non-follower with retweeted count more than',
+      placeholder: 'Enter a retweeted count',
+      function(t, e) {
+        if (!e.user) return true;
+
+        return !(
+          e.isRetweetedStatus() &&
+          !e.retweetedStatus.user.following &&
+          e.retweetedStatus.retweetCount > parseInt(t.value, 10)
+        );
+      },
+    },
   };
 
   // Custom pass function to apply our filters
