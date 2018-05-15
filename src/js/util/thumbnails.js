@@ -163,12 +163,13 @@ export const schemeWhitelist = [
   Providers.youtube(util),
   Providers.yfrog(util),
   Providers.universal(util),
-  Providers.opengraph(util),
 ];
 
 if (!BHelper.isFirefox) {
   schemeWhitelist.push(Providers.instagram(util));
 }
+// Prevent hide Instagram provider behind opengraph
+schemeWhitelist.push(Providers.opengraph(util));
 
 export const validateUrl = (url) => {
   let provider = '';
